@@ -1,12 +1,10 @@
-#Non-OOP
-#Bank 2
-#Single account
+# Non-OOP
+# Bank 2
+# Single account
 
 accountName = ''
-accountBalance = ''
+accountBalance = 0
 accountPassword = ''
-
-1
 
 def newAccount(name, balance, password):
     global accountName, accountBalance, accountPassword
@@ -14,85 +12,102 @@ def newAccount(name, balance, password):
     accountBalance = balance
     accountPassword = password
 
+   
 def show():
     global accountName, accountBalance, accountPassword
-    print('     Name', accountName)
-    print('     Balance', accountBalance)
-    print('     Password', accountPassword)
+    print('       Name', accountName)
+    print('       Balance:', accountBalance)
+    print('       Password:', accountPassword)
     print()
 
-2
-
-def deposit(password):
+def getBalance(password):
     global accountName, accountBalance, accountPassword
     if password != accountPassword:
-        print('Incorrect Password')
+        print('Incorrect password')
         return None
+        
     return accountBalance
-
-3
 
 def deposit(amountToDeposit, password):
     global accountName, accountBalance, accountPassword
     if amountToDeposit < 0:
-        print('You can not deposite a negative amount!')
+        print('You cannot deposit a negative amount!')
         return None
-
+        
     if password != accountPassword:
-        print('Incorrect Password')
+        print('Incorrect password')
         return None
-
+    
     accountBalance = accountBalance + amountToDeposit
     return accountBalance
-
-4
-def withdraw (amountToWithdraw, password):
+    
+def withdraw(amountToWithdraw, password):
     global accountName, accountBalance, accountPassword
     if amountToWithdraw < 0:
-        print('You can not withdraw a negative amount.')
+        print('You cannot withdraw a negative amount')
         return None
 
     if password != accountPassword:
-        print('Incorrect password for thhs account.')
+        print('Incorrect password for this account')
         return None
 
     if amountToWithdraw > accountBalance:
-        print('You cannot withdraw more than you have in your accont.')
+        print('You cannot withdraw more than you have in your account')
         return None
 
     accountBalance = accountBalance - amountToWithdraw
     return accountBalance
 
-newAccount('Joe', 100, 'soup')
+
+newAccount("Joe", 100, 'soup')  # create an account
 
 while True:
+    print()
     print('Press b to get the balance')
-    print('Press d to nake a deposit')
-    print('Press w to nake a withdrawl')
+    print('Press d to make a deposit')
+    print('Press w to make a withdrawal')
     print('Press s to show the account')
     print('Press q to quit')
     print()
 
     action = input('What do you want to do? ')
-    action = action.lower()
-    action = action[0]
+    action = action.lower()  # force lowercase
+    action = action[0]  # just use first letter
     print()
-
+    
     if action == 'b':
-        print('Get Balance: ')
+        print('Get Balance:')
         userPassword = input('Please enter the password: ')
         theBalance = getBalance(userPassword)
         if theBalance is not None:
-            print('Your balance is: ', theBalance)
+            print('Your balance is:', theBalance)
 
-        elif action =='d':
-            print('Deposit: ')
-            userDepositAmount = input('Please enter amount to deposit: ')
-            userDepositAmount = int(userDepositAmount)
-            userPassword = input('Please enter the password: ')
+    elif action == 'd':
+        print('Deposit:')
+        userDepositAmount = input('Please enter amount to deposit: ')
+        userDepositAmount = int(userDepositAmount)
+        userPassword = input('Please enter the password: ')
 
-            newBalance = deposit(userDepositAmount, userPassword)
-            if newBalance is not None:
-                print('Your new balance is: ', newBalance)
+        newBalance = deposit(userDepositAmount, userPassword)
+        if newBalance is not None:
+            print('Your new balance is:', newBalance)       
+
+    elif action == 's':   #show
+        print('Show:')
+        show()
+
+    elif action == 'q':
+        break
+
+    elif action == 'w':
+        print('Withdraw:')
+
+        userWithdrawAmount = input('Please enter the amount to withdraw: ')
+        userWithdrawAmount = int(userWithdrawAmount)
+        userPassword = input('Please enter the password: ')
+ 
+        newBalance = withdraw(userWithdrawAmount, userPassword)
+        if newBalance is not None:
+            print('Your new balance is:', newBalance)      
 
 print('Done')
